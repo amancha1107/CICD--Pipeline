@@ -1,8 +1,10 @@
 pipeline {
-agent none
+agent any
 stages {
 stage('stage1') {
+  steps {
 echo "hiiii"
+}
 }
 }
 }
