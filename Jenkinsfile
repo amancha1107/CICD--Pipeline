@@ -1,9 +1,9 @@
 pipeline {
-agent any
+  agent {label 'label11'}
 stages {
-stage('stage1') {
+stage('git-checkout') {
   steps {
-echo "hiiii"
+git 'https://github.com/vijay2181/CICD-PIPELINE.git'
 }
 }
 }
