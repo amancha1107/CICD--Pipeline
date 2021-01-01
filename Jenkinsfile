@@ -1,4 +1,4 @@
- pipeline {
+pipeline {
   agent {label 'label11'}
 
 parameters {
@@ -67,5 +67,16 @@ stage('Code Coverage')
    }
   }
 
-}
-}
+
+stage('SonarQube Analysis')                     
+  {
+    when {environment name: 'BUILDME', value: 'yes'}
+    steps{
+     withSonarQubeEnv('demosonarqube') {                                     //demosonarqube is name of sonarqube dashboard given in sonarqube servers
+	  dir ("./samplejar") {
+         sh 'mvn sonar:sonar'                                                   //it will call static code analysis and capture the details
+	  }
+     } 
+    }
+  }
+
