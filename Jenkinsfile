@@ -3,6 +3,7 @@
 
 parameters {
     booleanParam(name: 'UNITTEST', defaultValue: true, description: 'Enable UnitTests ?')
+    booleanParam(name: 'CODEANALYSIS', defaultValue: true, description: 'Enable CODE-ANALYSIS ?')
                     }
 
 stages {
@@ -17,7 +18,7 @@ git 'https://github.com/vijay2181/CICD-PIPELINE.git'
   
   stage('PreCheck') {
    
-   steps {
+   steps {                                   //precheck means validation
        script {
           env.BUILDME = "yes" // Set env variable to enable further Build Stages
        }
@@ -49,6 +50,22 @@ stage('Build Artifacts')
             }
      }
 
+
+stage('Code Coverage')
+  {
+   when {
+     allOf {
+         expression { return params.CODEANALYSIS }
+         environment name: 'BUILDME', value: 'yes'
+     }
+   }
+   steps {
+     echo "Running Code Coverage ..."  
+	 dir ("./samplejar") {
+	   sh "mvn  org.jacoco:jacoco-maven-plugin:0.5.5.201112152213:prepare-agent"
+	 }
+   }
+  }
 
 }
 }
