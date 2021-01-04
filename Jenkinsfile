@@ -90,7 +90,7 @@ stage('Stage Artifacts')
    steps {          
     script { 
 	    /* Define the Artifactory Server details */
-        def server = Artifactory.server 'demoartifactory'                       //Artifactory.server is a fuction got by installing artifactory plugin
+        def server = Artifactory.server 'jfrog'                       //Artifactory.server is a fuction got by installing artifactory plugin
         def uploadSpec = """{
             "files": [{
                 "pattern": "samplewar/target/samplewar.war",                                  
