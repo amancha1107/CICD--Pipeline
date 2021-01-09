@@ -1,5 +1,5 @@
 #jboss/wildfly
-FROM vijay2181/jay
+FROM vijay2181/jay:build01
 WORKDIR /root/workspace/cicd
 COPY samplewar/target/samplewar.war /opt/jboss/wildfly/standalone/deployments/
 RUN /opt/jboss/wildfly/bin/add-user.sh admin admin --silent
