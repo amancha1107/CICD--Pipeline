@@ -1,5 +1,5 @@
 pipeline {
-  agent {label 'label11'}
+  agent {label 'label12'}
 
 parameters {
     booleanParam(name: 'UNITTEST', defaultValue: true, description: 'Enable UnitTests ?')
@@ -88,23 +88,45 @@ stage('Stage Artifacts')
   
    when {environment name: 'BUILDME', value: 'yes'}
    steps {          
-    script { 
-	    /* Define the Artifactory Server details */
-        def server = Artifactory.server 'jfrog'                       //Artifactory.server is a fuction got by installing artifactory plugin
-        def uploadSpec = """{
-            "files": [{
-                "pattern": "samplewar/target/samplewar.war",                                  
-                "target": "demoCICD"                                                        
-            }]
-        }"""                                                                                                //demoCICD is the repository name in jfrog
-        
-        /* Upload the war to  Artifactory repo */
-        server.upload(uploadSpec)
-    }
+    echo "stage JFROG Artifacts"
    }
   }
 
 
+stage('Build Image') 
+  {
+    agent { label 'label12' }
+    when {environment name: 'BUILDME', value: 'yes'}
+    steps{
+      script {
+          docker.withRegistry( 'https://registry.hub.docker.com', 'dockerhub' ) {
+             /* Build Docker Image locally */
+             myImage = docker.build("vijay2181/vijaycicd:latest") 
+
+               //'dockerhub' is the credential ID............. docker.withRegistry is a function.
+               //docker.build is default function which creates image from dockerfile which should be available from same folder your workspace
+
+             /* Push the container to the Registry */
+             myImage.push()                               //it wiil try to create an image with samge tag and push to our registry 
+                                                                     //so we need to write dockerfile for this
+          }
+      }
+    }
+  }
+
+
+stage ('Deploy'){
+    agent {label 'label12'}
+	when {environment name: 'BUILDME', value: 'yes'}
+    steps {
+        git branch: 'master', url: 'https://github.com/vijay2181/CICD-PIPELINE.git'
+        step([$class: 'DockerComposeBuilder', dockerComposeFile: 'docker-compose.yml', option: [$class: 'StartAllServices'], useCustomDockerComposeFile: false])
 
 }
+}
+
+
+
+
+ } //End of Stages
 }
