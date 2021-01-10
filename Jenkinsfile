@@ -124,7 +124,15 @@ stage ('Deploy'){
 }
 
 
-
+stage ('Smoke Test'){
+    agent {label 'pilot'}
+    when {environment name: 'BUILDME', value: 'yes'}
+    steps {
+      sh "sleep 10; chmod +x runsmokes.sh; ./runsmokes.sh"
+    }      
+  }
+	
+	
 
  } //End of Stages
 }
