@@ -2,7 +2,7 @@ version: '3'
 services:
  web:
   container_name: vijaydev
-  image: "vijay2181/productimage:01"
+  image: "vijay2181/productimage:01"  //name of image on which container want to build
   ports:
   - "8080:8080"
   volumes:
