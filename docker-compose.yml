@@ -1,8 +1,8 @@
 version: '3'
 services:
  web:
-  container_name: wezvadev
-  image: "adamtravis/wildfly"
+  container_name: vijaydev
+  image: "vijay2181/vijaycicd"
   ports:
   - "8080:8080"
   volumes:
@@ -12,7 +12,7 @@ services:
   depends_on:
     - redis
  redis:
-  container_name: wezvadevdb
+  container_name: vijaydevdb
   image: "redis:alpine"
   ports:
   - "6379:6379"
