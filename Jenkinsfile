@@ -95,7 +95,6 @@ stage('Stage Artifacts')
 
 stage('Build Image') 
   {
-    agent { label 'label12' }
     when {environment name: 'BUILDME', value: 'yes'}
     steps{
       script {
@@ -116,8 +115,7 @@ stage('Build Image')
 
 
 stage ('Deploy'){
-    agent {label 'label12'}
-	when {environment name: 'BUILDME', value: 'yes'}
+    when {environment name: 'BUILDME', value: 'yes'}
     steps {
         git branch: 'master', url: 'https://github.com/vijay2181/CICD-PIPELINE.git'
         step([$class: 'DockerComposeBuilder', dockerComposeFile: 'docker-compose.yml', option: [$class: 'StartAllServices'], useCustomDockerComposeFile: false])
