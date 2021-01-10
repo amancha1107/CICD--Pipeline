@@ -100,7 +100,7 @@ stage('Build Image')
       script {
           docker.withRegistry( 'https://registry.hub.docker.com', 'dockerhub' ) {
              /* Build Docker Image locally */
-             myImage = docker.build("vijay2181/vijay:cicd01") 
+             myImage = docker.build("vijay2181/productimage:01") 
 
                //'dockerhub' is the credential ID............. docker.withRegistry is a function.
                //docker.build is default function which creates image from dockerfile which should be available from same folder your workspace
