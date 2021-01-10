@@ -2,7 +2,7 @@ version: '3'
 services:
  web:
   container_name: vijaydev
-  image: "vijay2181/vijaycicd:latest"
+  image: "vijay2181/productimage:01"
   ports:
   - "8080:8080"
   volumes:
