@@ -2,7 +2,7 @@ version: '3'
 services:
  web:
   container_name: vijaydev
-  image: "vijay2181/productimage:01"  //name of image on which container want to build
+  image: "vijay2181/productimage:01"  //give same name of image which is given in dockerfile and create container on it
   ports:
   - "8080:8080"
   volumes:
