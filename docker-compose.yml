@@ -2,13 +2,13 @@ version: '3'
 services:
  web:
   container_name: vijaydev
-  image: "vijay2181/vijaycicd"
+  image: "vijay2181/vijaycicd:latest"
   ports:
   - "8080:8080"
   volumes:
-  - ./sanity:/var/log/wezva
+  - ./sanity:/var/log/vijay
   restart: always
-  command: -Djboss.server.log.dir=/var/log/wezva
+  command: -Djboss.server.log.dir=/var/log/vijay
   depends_on:
     - redis
  redis:
